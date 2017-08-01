@@ -48,4 +48,29 @@ public class DAOReports {
 
         return null;
     }
+
+    public static List<Report> getReports() {
+        try (Connection c = getConnection();
+            PreparedStatement ps = c.prepareStatement("SELECT id, order_id, user_id, fine, comment FROM reports")) {
+
+            ResultSet resultSet = ps.executeQuery();
+            ArrayList<Report> reports = new ArrayList<>();
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt(1);
+                int orderId = resultSet.getInt(2);
+                int userId = resultSet.getInt(3);
+                int fine = resultSet.getInt(4);
+                String comment = resultSet.getString(5);
+
+                reports.add(new Report(id, orderId, userId, fine, comment));
+            }
+
+            return reports;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

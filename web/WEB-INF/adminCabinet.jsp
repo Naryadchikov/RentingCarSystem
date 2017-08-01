@@ -7,6 +7,7 @@
         <div align="center">
             <a href="/cars">All Cars</a> <br>
             <a href="/orders">All Orders</a> <br>
+            <a href="/reports">All Reports</a> <br>
             <form action="/signOut" method="POST">
                 <input type="submit" value="Sign out">
             </form>
