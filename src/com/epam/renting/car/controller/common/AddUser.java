@@ -23,8 +23,7 @@ public class AddUser extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         out.println("You have successfully registered");
-
-        // response.sendRedirect("/login");
+        response.setHeader("Refresh", "3; URL=/login");
     }
 
     @Override

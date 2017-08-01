@@ -11,9 +11,7 @@
                 password : <input name="pass" type="password" required="required"> <br>
                 <input type="submit" value="Sign in">
             </form>
-            <form action="/signOut" method="POST">
-                <input type="submit" value="Sign out">
-            </form>
+            <a href="/registration">Registration</a>
         </div>
     </body>
 </html>

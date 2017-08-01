@@ -34,6 +34,7 @@ public class OrderDeclined extends HttpServlet {
                 request.getRequestDispatcher("WEB-INF/fillDeclinedReport.jsp").forward(request, response);
             } else {
                 out.println("Order state must be 'UNDER_CONSIDERATION', only in that case you can declined it");
+                response.setHeader("Refresh", "3; URL=/adminCabinet");
             }
         } else {
             response.sendRedirect("/accessDenied");

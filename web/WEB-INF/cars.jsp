@@ -5,6 +5,7 @@
     <title>Cars List</title>
 </head>
     <body>
+        <a href="/adminCabinet">Back to Admin Cabinet</a> <br>
         <div align="center">
             <table border="1">
                 <tr>

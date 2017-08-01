@@ -29,6 +29,7 @@ public class SendOrder extends HttpServlet {
             PrintWriter out = response.getWriter();
 
             out.println("Your order sent to administrator, please stand by!");
+            response.setHeader("Refresh", "3; URL=/myCabinet");
         } else {
             response.sendRedirect("/accessDenied");
         }

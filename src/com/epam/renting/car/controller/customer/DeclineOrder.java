@@ -36,6 +36,7 @@ public class DeclineOrder extends HttpServlet {
             } else {
                 out.println("Your order state must be 'UNDER_CONSIDERATION' or 'WAITING_FOR_PAYMENT', only in that case you can decline an order");
             }
+            response.setHeader("Refresh", "3; URL=/myCabinet");
         } else {
             response.sendRedirect("/accessDenied");
         }

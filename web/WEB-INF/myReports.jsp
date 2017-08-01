@@ -5,6 +5,7 @@
     <title>My Reports</title>
 </head>
     <body>
+        <a href="/myCabinet">Back to My Cabinet</a> <br>
         <div align="center">
             <table border="1">
                 <tr>

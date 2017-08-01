@@ -32,9 +32,15 @@ public class SignIn extends HttpServlet {
             session.setAttribute("Role", role);
             session.setAttribute("user_id", user.getId());
 
-            logger.info("checking is loger working?");
+            logger.info("checking is logger working?");
 
             out.println("You have successfully signed in");
+
+            if (role.equals("admin")) {
+                response.setHeader("Refresh", "3; URL=/adminCabinet");
+            } else {
+                response.setHeader("Refresh", "3; URL=/myCabinet");
+            }
         } else {
             request.getRequestDispatcher("WEB-INF/login.jsp").include(request, response);
         }

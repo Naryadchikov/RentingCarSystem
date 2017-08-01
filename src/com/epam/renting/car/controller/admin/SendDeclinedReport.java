@@ -33,6 +33,7 @@ public class SendDeclinedReport extends HttpServlet {
             PrintWriter out = response.getWriter();
 
             out.println("You have successfully created report");
+            response.setHeader("Refresh", "3; URL=/adminCabinet");
         } else {
             response.sendRedirect("/accessDenied");
         }

@@ -28,12 +28,13 @@ public class CarPayment extends HttpServlet {
 
         if (session != null && session.getAttribute("Role") != null) {
            if (DAOOrders.getOrder(orderId).getStatus().equals(OrderState.WAITING_FOR_PAYMENT)) {
-                DAOOrders.changeOrderStatus(orderId, OrderState.CAR_IS_USED);
-                response.sendRedirect("/myCurrentOrders");
+               DAOOrders.changeOrderStatus(orderId, OrderState.CAR_IS_USED);
+               response.sendRedirect("/myCurrentOrders");
             } else {
-                PrintWriter out = response.getWriter();
+               PrintWriter out = response.getWriter();
 
-                out.println("Your order state must be 'WAITING_FOR_PAYMENT', only in that case you can pay an order");
+               out.println("Your order state must be 'WAITING_FOR_PAYMENT', only in that case you can pay an order");
+               response.setHeader("Refresh", "3; URL=/myCabinet");
             }
         } else {
             response.sendRedirect("/accessDenied");

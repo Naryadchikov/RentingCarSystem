@@ -34,6 +34,7 @@ public class MakeReport extends HttpServlet {
                 request.getRequestDispatcher("WEB-INF/fillReport.jsp").forward(request, response);
             } else {
                 out.println("Order state must be 'REGISTRATION_OF_RETURN', only in that case you can make report");
+                response.setHeader("Refresh", "3; URL=/adminCabinet");
             }
         } else {
             response.sendRedirect("/accessDenied");

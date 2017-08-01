@@ -34,6 +34,7 @@ public class CarReturning extends HttpServlet {
                 PrintWriter out = response.getWriter();
 
                 out.println("Your order state must be 'CAR_IS_USED', only in that case you can return it");
+                response.setHeader("Refresh", "3; URL=/myCabinet");
             }
         } else {
             response.sendRedirect("/accessDenied");

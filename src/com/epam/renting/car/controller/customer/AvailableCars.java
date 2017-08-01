@@ -35,6 +35,7 @@ public class AvailableCars extends HttpServlet {
             } else {
                 PrintWriter out = response.getWriter();
                 out.println("No cars available at the moment");
+                response.setHeader("Refresh", "3; URL=/myCabinet");
             }
         } else {
             response.sendRedirect("/accessDenied");
