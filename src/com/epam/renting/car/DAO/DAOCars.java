@@ -9,8 +9,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 public class DAOCars {
+    private static final Logger logger = LogManager.getLogger(DAOCars.class);
+
     public static List<Car> getCars(String SQLStatement) {
         try (Connection c = getConnection();
             PreparedStatement ps = c.prepareStatement(SQLStatement)) {
@@ -29,7 +33,7 @@ public class DAOCars {
 
             return cars;
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQLException provided by this '" + SQLStatement + "' query in order to get cars list", e);
         }
 
         return null;
@@ -44,7 +48,7 @@ public class DAOCars {
             ps.setInt(4, pricePerDay);
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQLException provided by adding new car into cars table", e);
         }
     }
 
@@ -54,7 +58,7 @@ public class DAOCars {
             ps.setInt(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQLException provided by deleting car number " + id + " from cars table", e);
         }
     }
 
@@ -65,7 +69,7 @@ public class DAOCars {
             ps.setInt(2, id);
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQLException provided by updating car's number " + id + " price per day in cars table", e);
         }
     }
 }

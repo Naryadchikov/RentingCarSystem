@@ -7,9 +7,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 @WebServlet(name = "RentCar", urlPatterns = "/rentCar")
 public class RentCar extends HttpServlet {
+    private static final Logger logger = LogManager.getLogger(RentCar.class);
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -25,6 +28,7 @@ public class RentCar extends HttpServlet {
 
         if (session != null && session.getAttribute("Role") != null) {
             session.setAttribute("car_id", carId);
+            logger.info("User number " + session.getAttribute("user_id").toString() + " is going to rent car number " + carId);
             request.getRequestDispatcher("WEB-INF/fillOrder.jsp").forward(request, response);
         } else {
             response.sendRedirect("/accessDenied");

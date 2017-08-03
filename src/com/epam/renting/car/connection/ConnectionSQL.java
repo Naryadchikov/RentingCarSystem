@@ -1,13 +1,17 @@
 package com.epam.renting.car.connection;
 
+import com.epam.renting.car.DAO.DAOUsers;
 import java.sql.Connection;
 import java.sql.SQLException;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 public class ConnectionSQL {
+    private static final Logger logger = LogManager.getLogger(DAOUsers.class);
     private static DataSource dataSource;
 
     static {
@@ -17,14 +21,11 @@ public class ConnectionSQL {
 
             dataSource = (DataSource) envContext.lookup("jdbc/test");
         } catch (NamingException e) {
-            e.printStackTrace();
+            logger.error("Resource described in context.xml wasn't found", e);
         }
     }
 
     public static Connection getConnection() throws SQLException {
-//        Class.forName("com.mysql.jdbc.Driver");
-//
-//        return DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "1771");
         return dataSource.getConnection();
     }
 }

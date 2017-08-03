@@ -10,9 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 @WebServlet(name = "DeclineOrder", urlPatterns = "/declineOrder")
 public class DeclineOrder extends HttpServlet {
+    private static final Logger logger = LogManager.getLogger(DeclineOrder.class);
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -32,6 +35,7 @@ public class DeclineOrder extends HttpServlet {
 
             if (status.equals(OrderState.UNDER_CONSIDERATION) || status.equals(OrderState.WAITING_FOR_PAYMENT)) {
                 DAOOrders.deleteOrder(orderId);
+                logger.info("User number " + session.getAttribute("user_id").toString() + " declined his/her order number " + orderId);
                 out.println("Order is declined!");
             } else {
                 out.println("Your order state must be 'UNDER_CONSIDERATION' or 'WAITING_FOR_PAYMENT', only in that case you can decline an order");

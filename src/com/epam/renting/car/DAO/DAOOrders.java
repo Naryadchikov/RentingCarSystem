@@ -10,8 +10,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 public class DAOOrders {
+    private static final Logger logger = LogManager.getLogger(DAOOrders.class);
 
     public static Order getOrder(int id) {
         try (Connection c = getConnection();
@@ -31,7 +34,7 @@ public class DAOOrders {
 
             return new Order(id, carId, userId, passport, startDate, endingDate, status);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQLException provided by 'SELECT' query in order to get order from orders table by id " + id, e);
         }
 
         return null;
@@ -57,7 +60,7 @@ public class DAOOrders {
 
             return orders;
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQLException provided by 'SELECT' query in order to get orders list", e);
         }
 
         return null;
@@ -84,7 +87,7 @@ public class DAOOrders {
 
             return orders;
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQLException provided by 'SELECT' query in order to get orders list of user number " + userId, e);
         }
 
         return null;
@@ -100,7 +103,7 @@ public class DAOOrders {
             ps.setString(5, endingDate);
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQLException provided by adding new order into orders table", e);
         }
     }
 
@@ -110,7 +113,7 @@ public class DAOOrders {
             ps.setInt(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQLException provided by deleting order number " + id + " from orders table", e);
         }
     }
 
@@ -121,7 +124,7 @@ public class DAOOrders {
             ps.setInt(2, id);
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQLException provided by updating order's number " + id + " status in orders table", e);
         }
     }
 }

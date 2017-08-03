@@ -7,9 +7,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 @WebServlet(name = "MyCabinet", urlPatterns = "/myCabinet")
 public class MyCabinet extends HttpServlet {
+    private static final Logger logger = LogManager.getLogger(MyCabinet.class);
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -23,6 +26,7 @@ public class MyCabinet extends HttpServlet {
         HttpSession session = request.getSession(false);
 
         if (session != null && session.getAttribute("Role") != null) {
+            logger.info("User number " + session.getAttribute("user_id").toString() + " opened his/her cabinet");
             request.getRequestDispatcher("WEB-INF/myCabinet.jsp").forward(request, response);
         } else {
             response.sendRedirect("/accessDenied");

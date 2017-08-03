@@ -11,9 +11,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 @WebServlet(name = "MyCurrentOrders", urlPatterns = "/myCurrentOrders")
 public class MyCurrentOrders extends HttpServlet {
+    private static final Logger logger = LogManager.getLogger(MyCurrentOrders.class);
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -28,6 +31,8 @@ public class MyCurrentOrders extends HttpServlet {
 
         if (session != null && session.getAttribute("Role") != null) {
             List<Order> orders = DAOOrders.getOrders(Integer.parseInt(session.getAttribute("user_id").toString()));
+
+            logger.info("User number " + session.getAttribute("user_id").toString() + " opened his/her current orders");
 
             if (orders != null) {
                 request.setAttribute("orders", orders);

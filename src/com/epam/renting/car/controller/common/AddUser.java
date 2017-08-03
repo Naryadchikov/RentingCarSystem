@@ -8,9 +8,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 @WebServlet(name = "AddUser", urlPatterns = "/addUser")
 public class AddUser extends HttpServlet {
+    private static final Logger logger = LogManager.getLogger(AddUser.class);
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -20,6 +23,7 @@ public class AddUser extends HttpServlet {
 
         DAOUsers.addUser(email, pass);
 
+        logger.info("New user with email " + email + " was added");
         PrintWriter out = response.getWriter();
 
         out.println("You have successfully registered");

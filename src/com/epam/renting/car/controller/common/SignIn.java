@@ -15,7 +15,7 @@ import org.apache.log4j.Logger;
 
 @WebServlet(name = "SignIn", urlPatterns = "/signIn")
 public class SignIn extends HttpServlet {
-    private Logger logger = LogManager.getRootLogger();
+    private static final Logger logger = LogManager.getLogger(SignIn.class);
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -32,7 +32,7 @@ public class SignIn extends HttpServlet {
             session.setAttribute("Role", role);
             session.setAttribute("user_id", user.getId());
 
-            logger.info("checking is logger working?");
+            logger.info("User number " + user.getId() + " signed in");
 
             out.println("You have successfully signed in");
 
@@ -42,6 +42,7 @@ public class SignIn extends HttpServlet {
                 response.setHeader("Refresh", "3; URL=/myCabinet");
             }
         } else {
+            logger.info("Somebody with email " + email + "wrote wrong password or didn't register");
             request.getRequestDispatcher("WEB-INF/login.jsp").include(request, response);
         }
     }

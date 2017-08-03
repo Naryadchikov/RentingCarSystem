@@ -11,9 +11,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 @WebServlet(name = "SendReport", urlPatterns = "/sendReport")
 public class SendReport extends HttpServlet {
+    private static final Logger logger = LogManager.getLogger(SendReport.class);
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -31,6 +34,7 @@ public class SendReport extends HttpServlet {
 
             PrintWriter out = response.getWriter();
 
+            logger.info("Admin with user_id " + session.getAttribute("user_id").toString() + " closed order number " + orderId + " and created report");
             out.println("You have successfully created report");
             response.setHeader("Refresh", "3; URL=/adminCabinet");
         } else {

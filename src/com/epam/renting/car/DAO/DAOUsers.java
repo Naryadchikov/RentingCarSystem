@@ -7,8 +7,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 public class DAOUsers {
+    private static final Logger logger = LogManager.getLogger(DAOUsers.class);
+
     public static User getUser(String email, String pass) {
         try (Connection c = getConnection();
             PreparedStatement ps = c.prepareStatement("SELECT * from users WHERE email = ? and pass = ?")) {
@@ -31,7 +35,7 @@ public class DAOUsers {
                 return new User(dbId, dbEmail, dbPass, dbRole);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQLException provided by 'SELECT' query in order to get user from users table by email: " + email + " and password", e);
         }
 
         return null;
@@ -44,7 +48,7 @@ public class DAOUsers {
             ps.setString(2, pass);
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQLException provided by adding new user into users table", e);
         }
     }
 }

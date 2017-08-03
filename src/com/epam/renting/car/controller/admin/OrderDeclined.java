@@ -10,9 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 @WebServlet(name = "OrderDeclined", urlPatterns = "/orderDeclined")
 public class OrderDeclined extends HttpServlet {
+    private static final Logger logger = LogManager.getLogger(OrderDeclined.class);
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -31,6 +34,7 @@ public class OrderDeclined extends HttpServlet {
 
             if (DAOOrders.getOrder(orderId).getStatus().equals(OrderState.UNDER_CONSIDERATION)) {
                 session.setAttribute("order_id", orderId);
+                logger.info("Admin with user_id " + session.getAttribute("user_id").toString() + " is going to decline order number " + orderId);
                 request.getRequestDispatcher("WEB-INF/fillDeclinedReport.jsp").forward(request, response);
             } else {
                 out.println("Order state must be 'UNDER_CONSIDERATION', only in that case you can declined it");

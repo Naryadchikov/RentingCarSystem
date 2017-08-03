@@ -10,9 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 @WebServlet(name = "CarReturning", urlPatterns = "/carReturning")
 public class CarReturning extends HttpServlet {
+    private static final Logger logger = LogManager.getLogger(CarReturning.class);
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -29,6 +32,7 @@ public class CarReturning extends HttpServlet {
         if (session != null && session.getAttribute("Role") != null) {
             if (DAOOrders.getOrder(orderId).getStatus().equals(OrderState.CAR_IS_USED)) {
                 DAOOrders.changeOrderStatus(orderId, OrderState.REGISTRATION_OF_RETURN);
+                logger.info("User number " + session.getAttribute("user_id").toString() + " is going to register return of car, order number " + orderId);
                 response.sendRedirect("/myCurrentOrders");
             } else {
                 PrintWriter out = response.getWriter();
