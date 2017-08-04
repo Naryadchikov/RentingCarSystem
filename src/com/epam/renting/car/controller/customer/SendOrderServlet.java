@@ -12,9 +12,9 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-@WebServlet(name = "SendOrder", urlPatterns = "/sendOrder")
-public class SendOrder extends HttpServlet {
-    private static final Logger logger = LogManager.getLogger(SendOrder.class);
+@WebServlet(name = "SendOrderServlet", urlPatterns = "/sendOrder")
+public class SendOrderServlet extends HttpServlet {
+    private static final Logger logger = LogManager.getLogger(SendOrderServlet.class);
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

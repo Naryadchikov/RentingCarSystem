@@ -13,9 +13,9 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-@WebServlet(name = "MakeReport", urlPatterns = "/makeReport")
-public class MakeReport extends HttpServlet {
-    private static final Logger logger = LogManager.getLogger(MakeReport.class);
+@WebServlet(name = "MakeReportServlet", urlPatterns = "/makeReport")
+public class MakeReportServlet extends HttpServlet {
+    private static final Logger logger = LogManager.getLogger(MakeReportServlet.class);
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

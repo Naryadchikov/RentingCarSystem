@@ -1,7 +1,7 @@
 package com.epam.renting.car.controller.customer;
 
-import com.epam.renting.car.DAO.DAOCars;
-import com.epam.renting.car.model.Car;
+import com.epam.renting.car.DAO.DAOOrders;
+import com.epam.renting.car.model.Order;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -14,9 +14,9 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-@WebServlet(name = "AvailableCars", urlPatterns = "/availableCars")
-public class AvailableCars extends HttpServlet {
-    private static final Logger logger = LogManager.getLogger(AvailableCars.class);
+@WebServlet(name = "ShowMyCurrentOrdersServlet", urlPatterns = "/myCurrentOrders")
+public class ShowMyCurrentOrdersServlet extends HttpServlet {
+    private static final Logger logger = LogManager.getLogger(ShowMyCurrentOrdersServlet.class);
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -30,17 +30,17 @@ public class AvailableCars extends HttpServlet {
         HttpSession session = request.getSession(false);
 
         if (session != null && session.getAttribute("Role") != null) {
-            List<Car> cars = DAOCars.getCars("SELECT id, brand, model, color, pricePerDay FROM cars WHERE cars.id NOT IN (SELECT orders.car_id FROM orders)");
+            List<Order> orders = DAOOrders.getOrders(Integer.parseInt(session.getAttribute("user_id").toString()));
 
-            logger.info("User number " + session.getAttribute("user_id").toString() + " opened 'Available Cars' list");
+            logger.info("User number " + session.getAttribute("user_id").toString() + " opened his/her current orders");
 
-            if (cars != null) {
-                request.setAttribute("cars", cars);
-                request.getRequestDispatcher("WEB-INF/availableCars.jsp").forward(request, response);
+            if (orders != null) {
+                request.setAttribute("orders", orders);
+                request.getRequestDispatcher("WEB-INF/myCurrentOrders.jsp").forward(request, response);
             } else {
                 PrintWriter out = response.getWriter();
-                out.println("No cars available at the moment");
-                response.setHeader("Refresh", "3; URL=/myCabinet");
+
+                out.println("You don't have active orders");
             }
         } else {
             response.sendRedirect("/accessDenied");

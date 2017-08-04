@@ -11,9 +11,9 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-@WebServlet(name = "SignOut", urlPatterns = "/signOut")
-public class SignOut extends HttpServlet {
-    private static final Logger logger = LogManager.getLogger(SignOut.class);
+@WebServlet(name = "SignOutServlet", urlPatterns = "/signOut")
+public class SignOutServlet extends HttpServlet {
+    private static final Logger logger = LogManager.getLogger(SignOutServlet.class);
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

@@ -1,6 +1,5 @@
-package com.epam.renting.car.controller.admin;
+package com.epam.renting.car.controller.customer;
 
-import com.epam.renting.car.DAO.DAOReports;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,9 +10,9 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-@WebServlet(name = "Reports", urlPatterns = "/reports")
-public class Reports extends HttpServlet {
-    private static final Logger logger = LogManager.getLogger(Reports.class);
+@WebServlet(name = "RentCarServlet", urlPatterns = "/rentCar")
+public class RentCarServlet extends HttpServlet {
+    private static final Logger logger = LogManager.getLogger(RentCarServlet.class);
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -25,11 +24,12 @@ public class Reports extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
         HttpSession session = request.getSession(false);
+        int carId = Integer.parseInt(request.getParameter("id"));
 
-        if (session != null && session.getAttribute("Role") != null && session.getAttribute("Role").equals("admin")) {
-            request.setAttribute("reports", DAOReports.getReports());
-            logger.info("Admin with user_id " + session.getAttribute("user_id").toString() + " opened reports list");
-            request.getRequestDispatcher("WEB-INF/reports.jsp").forward(request, response);
+        if (session != null && session.getAttribute("Role") != null) {
+            session.setAttribute("car_id", carId);
+            logger.info("User number " + session.getAttribute("user_id").toString() + " is going to rent car number " + carId);
+            request.getRequestDispatcher("WEB-INF/fillOrder.jsp").forward(request, response);
         } else {
             response.sendRedirect("/accessDenied");
         }

@@ -1,7 +1,7 @@
-package com.epam.renting.car.controller.customer;
+package com.epam.renting.car.controller.admin;
 
-import com.epam.renting.car.DAO.DAOReports;
-import com.epam.renting.car.model.Report;
+import com.epam.renting.car.DAO.DAOOrders;
+import com.epam.renting.car.model.Order;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -14,9 +14,9 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-@WebServlet(name = "MyReports", urlPatterns = "/myReports")
-public class MyReports extends HttpServlet {
-    private static final Logger logger = LogManager.getLogger(MyReports.class);
+@WebServlet(name = "ShowOrdersServlet", urlPatterns = "/orders")
+public class ShowOrdersServlet extends HttpServlet {
+    private static final Logger logger = LogManager.getLogger(ShowOrdersServlet.class);
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -29,18 +29,18 @@ public class MyReports extends HttpServlet {
         throws ServletException, IOException {
         HttpSession session = request.getSession(false);
 
-        if (session != null && session.getAttribute("Role") != null) {
-            List<Report> reports = DAOReports.getReports(Integer.parseInt(session.getAttribute("user_id").toString()));
+        if (session != null && session.getAttribute("Role") != null && session.getAttribute("Role").equals("admin")) {
+            List<Order> orders = DAOOrders.getOrders();
 
-            logger.info("User number " + session.getAttribute("user_id").toString() + " opened his/her reports");
+            logger.info("Admin with user_id " + session.getAttribute("user_id").toString() + " opened orders list");
 
-            if (reports != null) {
-                request.setAttribute("reports", reports);
-                request.getRequestDispatcher("WEB-INF/myReports.jsp").forward(request, response);
+            if (orders != null) {
+                request.setAttribute("orders", orders);
+                request.getRequestDispatcher("WEB-INF/orders.jsp").forward(request, response);
             } else {
                 PrintWriter out = response.getWriter();
 
-                out.println("You don't have active reports");
+                out.println("No active orders right now");
             }
         } else {
             response.sendRedirect("/accessDenied");

@@ -1,6 +1,5 @@
-package com.epam.renting.car.controller.admin;
+package com.epam.renting.car.controller.customer;
 
-import com.epam.renting.car.DAO.DAOCars;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,9 +10,9 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-@WebServlet(name = "DeleteCar", urlPatterns = "/deleteCar")
-public class DeleteCar extends HttpServlet {
-    private static final Logger logger = LogManager.getLogger(DeleteCar.class);
+@WebServlet(name = "ShowMyCabinetServlet", urlPatterns = "/myCabinet")
+public class ShowMyCabinetServlet extends HttpServlet {
+    private static final Logger logger = LogManager.getLogger(ShowMyCabinetServlet.class);
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -25,10 +24,12 @@ public class DeleteCar extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        int id = Integer.parseInt(request.getParameter("id"));
 
-        DAOCars.deleteCar(id);
-        logger.info("Admin with user_id " + session.getAttribute("user_id").toString() + " deleted car number " + id);
-        response.sendRedirect("/cars");
+        if (session != null && session.getAttribute("Role") != null) {
+            logger.info("User number " + session.getAttribute("user_id").toString() + " opened his/her cabinet");
+            request.getRequestDispatcher("WEB-INF/myCabinet.jsp").forward(request, response);
+        } else {
+            response.sendRedirect("/accessDenied");
+        }
     }
 }

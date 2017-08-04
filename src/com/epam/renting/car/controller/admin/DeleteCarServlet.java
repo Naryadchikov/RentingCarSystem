@@ -11,26 +11,24 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-@WebServlet(name = "UpdateCar", urlPatterns = "/updateCar")
-public class UpdateCar extends HttpServlet {
-    private static final Logger logger = LogManager.getLogger(UpdateCar.class);
+@WebServlet(name = "DeleteCarServlet", urlPatterns = "/deleteCar")
+public class DeleteCarServlet extends HttpServlet {
+    private static final Logger logger = LogManager.getLogger(DeleteCarServlet.class);
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        int id = Integer.parseInt(request.getParameter("id"));
-        int pricePerDay = Integer.parseInt(request.getParameter("pricePerDay"));
 
-        DAOCars.updatePrice(id, pricePerDay);
-        logger.info("Admin with user_id " + session.getAttribute("user_id").toString() +
-            " update price of car number " + id + "to " + pricePerDay + "$/day");
-        response.sendRedirect("/cars");
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        int id = Integer.parseInt(request.getParameter("id"));
 
+        DAOCars.deleteCar(id);
+        logger.info("Admin with user_id " + session.getAttribute("user_id").toString() + " deleted car number " + id);
+        response.sendRedirect("/cars");
     }
 }

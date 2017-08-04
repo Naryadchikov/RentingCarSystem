@@ -13,9 +13,9 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-@WebServlet(name = "CarReturning", urlPatterns = "/carReturning")
-public class CarReturning extends HttpServlet {
-    private static final Logger logger = LogManager.getLogger(CarReturning.class);
+@WebServlet(name = "DeclineOrderServlet", urlPatterns = "/declineOrder")
+public class DeclineOrderServlet extends HttpServlet {
+    private static final Logger logger = LogManager.getLogger(DeclineOrderServlet.class);
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -30,16 +30,17 @@ public class CarReturning extends HttpServlet {
         int orderId = Integer.parseInt(request.getParameter("id"));
 
         if (session != null && session.getAttribute("Role") != null) {
-            if (DAOOrders.getOrder(orderId).getStatus().equals(OrderState.CAR_IS_USED)) {
-                DAOOrders.changeOrderStatus(orderId, OrderState.REGISTRATION_OF_RETURN);
-                logger.info("User number " + session.getAttribute("user_id").toString() + " is going to register return of car, order number " + orderId);
-                response.sendRedirect("/myCurrentOrders");
-            } else {
-                PrintWriter out = response.getWriter();
+            PrintWriter out = response.getWriter();
+            OrderState status = DAOOrders.getOrder(orderId).getStatus();
 
-                out.println("Your order state must be 'CAR_IS_USED', only in that case you can return it");
-                response.setHeader("Refresh", "3; URL=/myCabinet");
+            if (status.equals(OrderState.UNDER_CONSIDERATION) || status.equals(OrderState.WAITING_FOR_PAYMENT)) {
+                DAOOrders.deleteOrder(orderId);
+                logger.info("User number " + session.getAttribute("user_id").toString() + " declined his/her order number " + orderId);
+                out.println("Order is declined!");
+            } else {
+                out.println("Your order state must be 'UNDER_CONSIDERATION' or 'WAITING_FOR_PAYMENT', only in that case you can decline an order");
             }
+            response.setHeader("Refresh", "3; URL=/myCabinet");
         } else {
             response.sendRedirect("/accessDenied");
         }

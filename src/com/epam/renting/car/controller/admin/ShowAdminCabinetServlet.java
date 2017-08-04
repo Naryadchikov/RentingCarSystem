@@ -1,4 +1,4 @@
-package com.epam.renting.car.controller.customer;
+package com.epam.renting.car.controller.admin;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -10,9 +10,9 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-@WebServlet(name = "RentCar", urlPatterns = "/rentCar")
-public class RentCar extends HttpServlet {
-    private static final Logger logger = LogManager.getLogger(RentCar.class);
+@WebServlet(name = "ShowAdminCabinetServlet", urlPatterns = "/adminCabinet")
+public class ShowAdminCabinetServlet extends HttpServlet {
+    private static final Logger logger = LogManager.getLogger(ShowAdminCabinetServlet.class);
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -24,12 +24,10 @@ public class RentCar extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        int carId = Integer.parseInt(request.getParameter("id"));
 
-        if (session != null && session.getAttribute("Role") != null) {
-            session.setAttribute("car_id", carId);
-            logger.info("User number " + session.getAttribute("user_id").toString() + " is going to rent car number " + carId);
-            request.getRequestDispatcher("WEB-INF/fillOrder.jsp").forward(request, response);
+        if (session != null && session.getAttribute("Role") != null && session.getAttribute("Role").equals("admin")) {
+            logger.info("Admin with user_id " + session.getAttribute("user_id").toString() + " opened his/her admin cabinet");
+            request.getRequestDispatcher("WEB-INF/adminCabinet.jsp").forward(request, response);
         } else {
             response.sendRedirect("/accessDenied");
         }

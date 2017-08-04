@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-@WebServlet(name = "AddUser", urlPatterns = "/addUser")
-public class AddUser extends HttpServlet {
-    private static final Logger logger = LogManager.getLogger(AddUser.class);
+@WebServlet(name = "AddUserServlet", urlPatterns = "/addUser")
+public class AddUserServlet extends HttpServlet {
+    private static final Logger logger = LogManager.getLogger(AddUserServlet.class);
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

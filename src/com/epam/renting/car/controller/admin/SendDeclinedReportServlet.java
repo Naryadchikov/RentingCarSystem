@@ -14,9 +14,9 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-@WebServlet(name = "SendReport", urlPatterns = "/sendReport")
-public class SendReport extends HttpServlet {
-    private static final Logger logger = LogManager.getLogger(SendReport.class);
+@WebServlet(name = "SendDeclinedReportServlet", urlPatterns = "/sendDeclinedReport")
+public class SendDeclinedReportServlet extends HttpServlet {
+    private static final Logger logger = LogManager.getLogger(SendDeclinedReportServlet.class);
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -25,16 +25,15 @@ public class SendReport extends HttpServlet {
 
         if (session != null && session.getAttribute("Role") != null && session.getAttribute("Role").equals("admin")) {
             int orderId = Integer.parseInt(session.getAttribute("order_id").toString());
-            int fine = Integer.parseInt(request.getParameter("fine"));
             String comment = request.getParameter("comment");
             Order order = DAOOrders.getOrder(orderId);
 
-            DAOReports.addReport(orderId, order.getUserId(), fine, comment + "; Your order information: " + order.toString());
+            DAOReports.addReport(orderId, order.getUserId(), 0, comment + "; Your order information: " + order.toString());
             DAOOrders.deleteOrder(orderId);
 
             PrintWriter out = response.getWriter();
 
-            logger.info("Admin with user_id " + session.getAttribute("user_id").toString() + " closed order number " + orderId + " and created report");
+            logger.info("Admin with user_id " + session.getAttribute("user_id").toString() + " declined order number " + orderId + " and created report");
             out.println("You have successfully created report");
             response.setHeader("Refresh", "3; URL=/adminCabinet");
         } else {

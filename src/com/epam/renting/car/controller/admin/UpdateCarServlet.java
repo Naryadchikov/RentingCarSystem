@@ -11,27 +11,26 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-@WebServlet(name = "Cars", urlPatterns = "/cars")
-public class Cars extends HttpServlet {
-    private static final Logger logger = LogManager.getLogger(Cars.class);
+@WebServlet(name = "UpdateCarServlet", urlPatterns = "/updateCar")
+public class UpdateCarServlet extends HttpServlet {
+    private static final Logger logger = LogManager.getLogger(UpdateCarServlet.class);
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        int id = Integer.parseInt(request.getParameter("id"));
+        int pricePerDay = Integer.parseInt(request.getParameter("pricePerDay"));
 
+        DAOCars.updatePrice(id, pricePerDay);
+        logger.info("Admin with user_id " + session.getAttribute("user_id").toString() +
+            " update price of car number " + id + "to " + pricePerDay + "$/day");
+        response.sendRedirect("/cars");
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
 
-        if (session != null && session.getAttribute("Role") != null && session.getAttribute("Role").equals("admin")) {
-            request.setAttribute("cars", DAOCars.getCars("SELECT id, brand, model, color, pricePerDay FROM cars"));
-            logger.info("Admin with user_id " + session.getAttribute("user_id").toString() + " opened cars list");
-            request.getRequestDispatcher("WEB-INF/cars.jsp").forward(request, response);
-        } else {
-            response.sendRedirect("/accessDenied");
-        }
     }
 }
