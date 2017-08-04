@@ -1,6 +1,6 @@
 package com.epam.renting.car.controller.admin;
 
-import com.epam.renting.car.DAO.DAOReports;
+import com.epam.renting.car.DAO.ReportsDAO;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,7 +27,7 @@ public class ShowReportsServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
 
         if (session != null && session.getAttribute("Role") != null && session.getAttribute("Role").equals("admin")) {
-            request.setAttribute("reports", DAOReports.getReports());
+            request.setAttribute("reports", ReportsDAO.getReports());
             logger.info("Admin with user_id " + session.getAttribute("user_id").toString() + " opened reports list");
             request.getRequestDispatcher("WEB-INF/reports.jsp").forward(request, response);
         } else {

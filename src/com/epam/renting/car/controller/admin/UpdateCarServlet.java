@@ -1,6 +1,6 @@
 package com.epam.renting.car.controller.admin;
 
-import com.epam.renting.car.DAO.DAOCars;
+import com.epam.renting.car.DAO.CarsDAO;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,7 +22,7 @@ public class UpdateCarServlet extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         int pricePerDay = Integer.parseInt(request.getParameter("pricePerDay"));
 
-        DAOCars.updatePrice(id, pricePerDay);
+        CarsDAO.updatePrice(id, pricePerDay);
         logger.info("Admin with user_id " + session.getAttribute("user_id").toString() +
             " update price of car number " + id + "to " + pricePerDay + "$/day");
         response.sendRedirect("/cars");

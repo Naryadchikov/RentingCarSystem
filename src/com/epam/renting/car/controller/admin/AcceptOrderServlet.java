@@ -1,6 +1,6 @@
 package com.epam.renting.car.controller.admin;
 
-import com.epam.renting.car.DAO.DAOOrders;
+import com.epam.renting.car.DAO.OrdersDAO;
 import com.epam.renting.car.model.OrderState;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -32,8 +32,8 @@ public class AcceptOrderServlet extends HttpServlet {
         if (session != null && session.getAttribute("Role") != null && session.getAttribute("Role").equals("admin")) {
             PrintWriter out = response.getWriter();
 
-            if (DAOOrders.getOrder(orderId).getStatus().equals(OrderState.UNDER_CONSIDERATION)) {
-                DAOOrders.changeOrderStatus(orderId, OrderState.WAITING_FOR_PAYMENT);
+            if (OrdersDAO.getOrder(orderId).getStatus().equals(OrderState.UNDER_CONSIDERATION)) {
+                OrdersDAO.changeOrderStatus(orderId, OrderState.WAITING_FOR_PAYMENT);
                 logger.info("Admin with user_id " + session.getAttribute("user_id").toString() + " accepted order number " + orderId);
                 response.sendRedirect("/orders");
             } else {

@@ -1,6 +1,6 @@
 package com.epam.renting.car.controller.common;
 
-import com.epam.renting.car.DAO.DAOUsers;
+import com.epam.renting.car.DAO.UsersDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -21,7 +21,7 @@ public class AddUserServlet extends HttpServlet {
         String email = request.getParameter("email");
         String pass = request.getParameter("pass");
 
-        DAOUsers.addUser(email, pass);
+        UsersDAO.addUser(email, pass);
 
         logger.info("New user with email " + email + " was added");
         PrintWriter out = response.getWriter();

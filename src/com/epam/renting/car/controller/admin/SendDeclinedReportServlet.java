@@ -1,7 +1,7 @@
 package com.epam.renting.car.controller.admin;
 
-import com.epam.renting.car.DAO.DAOOrders;
-import com.epam.renting.car.DAO.DAOReports;
+import com.epam.renting.car.DAO.OrdersDAO;
+import com.epam.renting.car.DAO.ReportsDAO;
 import com.epam.renting.car.model.Order;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -26,10 +26,10 @@ public class SendDeclinedReportServlet extends HttpServlet {
         if (session != null && session.getAttribute("Role") != null && session.getAttribute("Role").equals("admin")) {
             int orderId = Integer.parseInt(session.getAttribute("order_id").toString());
             String comment = request.getParameter("comment");
-            Order order = DAOOrders.getOrder(orderId);
+            Order order = OrdersDAO.getOrder(orderId);
 
-            DAOReports.addReport(orderId, order.getUserId(), 0, comment + "; Your order information: " + order.toString());
-            DAOOrders.deleteOrder(orderId);
+            ReportsDAO.addReport(orderId, order.getUserId(), 0, comment + "; Your order information: " + order.toString());
+            OrdersDAO.deleteOrder(orderId);
 
             PrintWriter out = response.getWriter();
 

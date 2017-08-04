@@ -13,8 +13,8 @@ import java.util.List;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-public class DAOOrders {
-    private static final Logger logger = LogManager.getLogger(DAOOrders.class);
+public class OrdersDAO {
+    private static final Logger logger = LogManager.getLogger(OrdersDAO.class);
 
     public static Order getOrder(int id) {
         try (Connection c = getConnection();

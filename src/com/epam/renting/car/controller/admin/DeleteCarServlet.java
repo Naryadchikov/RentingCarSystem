@@ -1,6 +1,6 @@
 package com.epam.renting.car.controller.admin;
 
-import com.epam.renting.car.DAO.DAOCars;
+import com.epam.renting.car.DAO.CarsDAO;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,7 +27,7 @@ public class DeleteCarServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         int id = Integer.parseInt(request.getParameter("id"));
 
-        DAOCars.deleteCar(id);
+        CarsDAO.deleteCar(id);
         logger.info("Admin with user_id " + session.getAttribute("user_id").toString() + " deleted car number " + id);
         response.sendRedirect("/cars");
     }

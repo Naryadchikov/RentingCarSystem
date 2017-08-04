@@ -1,6 +1,6 @@
 package com.epam.renting.car.controller.customer;
 
-import com.epam.renting.car.DAO.DAOReports;
+import com.epam.renting.car.DAO.ReportsDAO;
 import com.epam.renting.car.model.Report;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -30,7 +30,7 @@ public class ShowMyReportsServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
 
         if (session != null && session.getAttribute("Role") != null) {
-            List<Report> reports = DAOReports.getReports(Integer.parseInt(session.getAttribute("user_id").toString()));
+            List<Report> reports = ReportsDAO.getReports(Integer.parseInt(session.getAttribute("user_id").toString()));
 
             logger.info("User number " + session.getAttribute("user_id").toString() + " opened his/her reports");
 

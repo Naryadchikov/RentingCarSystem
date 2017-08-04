@@ -1,7 +1,7 @@
 package com.epam.renting.car.controller.admin;
 
-import com.epam.renting.car.DAO.DAOOrders;
-import com.epam.renting.car.DAO.DAOReports;
+import com.epam.renting.car.DAO.OrdersDAO;
+import com.epam.renting.car.DAO.ReportsDAO;
 import com.epam.renting.car.model.Order;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -27,10 +27,10 @@ public class SendReportServlet extends HttpServlet {
             int orderId = Integer.parseInt(session.getAttribute("order_id").toString());
             int fine = Integer.parseInt(request.getParameter("fine"));
             String comment = request.getParameter("comment");
-            Order order = DAOOrders.getOrder(orderId);
+            Order order = OrdersDAO.getOrder(orderId);
 
-            DAOReports.addReport(orderId, order.getUserId(), fine, comment + "; Your order information: " + order.toString());
-            DAOOrders.deleteOrder(orderId);
+            ReportsDAO.addReport(orderId, order.getUserId(), fine, comment + "; Your order information: " + order.toString());
+            OrdersDAO.deleteOrder(orderId);
 
             PrintWriter out = response.getWriter();
 

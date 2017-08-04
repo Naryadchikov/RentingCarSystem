@@ -1,6 +1,6 @@
 package com.epam.renting.car.controller.customer;
 
-import com.epam.renting.car.DAO.DAOOrders;
+import com.epam.renting.car.DAO.OrdersDAO;
 import com.epam.renting.car.model.OrderState;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -31,10 +31,10 @@ public class DeclineOrderServlet extends HttpServlet {
 
         if (session != null && session.getAttribute("Role") != null) {
             PrintWriter out = response.getWriter();
-            OrderState status = DAOOrders.getOrder(orderId).getStatus();
+            OrderState status = OrdersDAO.getOrder(orderId).getStatus();
 
             if (status.equals(OrderState.UNDER_CONSIDERATION) || status.equals(OrderState.WAITING_FOR_PAYMENT)) {
-                DAOOrders.deleteOrder(orderId);
+                OrdersDAO.deleteOrder(orderId);
                 logger.info("User number " + session.getAttribute("user_id").toString() + " declined his/her order number " + orderId);
                 out.println("Order is declined!");
             } else {

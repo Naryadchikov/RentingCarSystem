@@ -1,6 +1,6 @@
 package com.epam.renting.car.controller.admin;
 
-import com.epam.renting.car.DAO.DAOCars;
+import com.epam.renting.car.DAO.CarsDAO;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,7 +24,7 @@ public class AddCarServlet extends HttpServlet {
         String color = request.getParameter("color");
         int pricePerDay = Integer.parseInt(request.getParameter("pricePerDay"));
 
-        DAOCars.addCar(brand, model, color, pricePerDay);
+        CarsDAO.addCar(brand, model, color, pricePerDay);
         logger.info("Admin with user_id " + session.getAttribute("user_id").toString() + " added new car with that parameters: " +
             brand + ", " + model + ", " + color + ", " + pricePerDay);
         response.sendRedirect("/cars");

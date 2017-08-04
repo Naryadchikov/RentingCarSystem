@@ -1,6 +1,6 @@
 package com.epam.renting.car.controller.customer;
 
-import com.epam.renting.car.DAO.DAOOrders;
+import com.epam.renting.car.DAO.OrdersDAO;
 import com.epam.renting.car.model.OrderState;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -30,8 +30,8 @@ public class CarReturningServlet extends HttpServlet {
         int orderId = Integer.parseInt(request.getParameter("id"));
 
         if (session != null && session.getAttribute("Role") != null) {
-            if (DAOOrders.getOrder(orderId).getStatus().equals(OrderState.CAR_IS_USED)) {
-                DAOOrders.changeOrderStatus(orderId, OrderState.REGISTRATION_OF_RETURN);
+            if (OrdersDAO.getOrder(orderId).getStatus().equals(OrderState.CAR_IS_USED)) {
+                OrdersDAO.changeOrderStatus(orderId, OrderState.REGISTRATION_OF_RETURN);
                 logger.info("User number " + session.getAttribute("user_id").toString() + " is going to register return of car, order number " + orderId);
                 response.sendRedirect("/myCurrentOrders");
             } else {

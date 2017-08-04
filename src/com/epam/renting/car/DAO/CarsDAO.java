@@ -12,8 +12,8 @@ import java.util.List;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-public class DAOCars {
-    private static final Logger logger = LogManager.getLogger(DAOCars.class);
+public class CarsDAO {
+    private static final Logger logger = LogManager.getLogger(CarsDAO.class);
 
     public static List<Car> getCars(String SQLStatement) {
         try (Connection c = getConnection();

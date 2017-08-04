@@ -1,6 +1,6 @@
 package com.epam.renting.car.controller.common;
 
-import com.epam.renting.car.DAO.DAOUsers;
+import com.epam.renting.car.DAO.UsersDAO;
 import com.epam.renting.car.model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,7 +22,7 @@ public class SignInServlet extends HttpServlet {
         throws ServletException, IOException {
         String email = request.getParameter("email");
         String pass = request.getParameter("pass");
-        User user = DAOUsers.getUser(email, pass);
+        User user = UsersDAO.getUser(email, pass);
 
         if (user != null) {
             String role = user.getRole();

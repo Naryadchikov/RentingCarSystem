@@ -1,6 +1,6 @@
 package com.epam.renting.car.controller.customer;
 
-import com.epam.renting.car.DAO.DAOOrders;
+import com.epam.renting.car.DAO.OrdersDAO;
 import com.epam.renting.car.model.Order;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -30,7 +30,7 @@ public class ShowMyCurrentOrdersServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
 
         if (session != null && session.getAttribute("Role") != null) {
-            List<Order> orders = DAOOrders.getOrders(Integer.parseInt(session.getAttribute("user_id").toString()));
+            List<Order> orders = OrdersDAO.getOrders(Integer.parseInt(session.getAttribute("user_id").toString()));
 
             logger.info("User number " + session.getAttribute("user_id").toString() + " opened his/her current orders");
 

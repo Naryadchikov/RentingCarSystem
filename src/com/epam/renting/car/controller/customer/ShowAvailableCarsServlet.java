@@ -1,6 +1,6 @@
 package com.epam.renting.car.controller.customer;
 
-import com.epam.renting.car.DAO.DAOCars;
+import com.epam.renting.car.DAO.CarsDAO;
 import com.epam.renting.car.model.Car;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -30,7 +30,7 @@ public class ShowAvailableCarsServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
 
         if (session != null && session.getAttribute("Role") != null) {
-            List<Car> cars = DAOCars.getCars("SELECT id, brand, model, color, pricePerDay FROM cars WHERE cars.id NOT IN (SELECT orders.car_id FROM orders)");
+            List<Car> cars = CarsDAO.getCars("SELECT id, brand, model, color, pricePerDay FROM cars WHERE cars.id NOT IN (SELECT orders.car_id FROM orders)");
 
             logger.info("User number " + session.getAttribute("user_id").toString() + " opened 'Available Cars' list");
 

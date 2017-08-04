@@ -12,8 +12,8 @@ import java.util.List;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-public class DAOReports {
-    private static final Logger logger = LogManager.getLogger(DAOReports.class);
+public class ReportsDAO {
+    private static final Logger logger = LogManager.getLogger(ReportsDAO.class);
 
     public static List<Report> getReports() {
         try (Connection c = getConnection();

@@ -10,8 +10,8 @@ import java.sql.SQLException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-public class DAOUsers {
-    private static final Logger logger = LogManager.getLogger(DAOUsers.class);
+public class UsersDAO {
+    private static final Logger logger = LogManager.getLogger(UsersDAO.class);
 
     public static User getUser(String email, String pass) {
         try (Connection c = getConnection();

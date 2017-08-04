@@ -1,6 +1,6 @@
 package com.epam.renting.car.controller.admin;
 
-import com.epam.renting.car.DAO.DAOOrders;
+import com.epam.renting.car.DAO.OrdersDAO;
 import com.epam.renting.car.model.OrderState;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -32,7 +32,7 @@ public class DeclineOrderServlet extends HttpServlet {
         if (session != null && session.getAttribute("Role") != null && session.getAttribute("Role").equals("admin")) {
             PrintWriter out = response.getWriter();
 
-            if (DAOOrders.getOrder(orderId).getStatus().equals(OrderState.UNDER_CONSIDERATION)) {
+            if (OrdersDAO.getOrder(orderId).getStatus().equals(OrderState.UNDER_CONSIDERATION)) {
                 session.setAttribute("order_id", orderId);
                 logger.info("Admin with user_id " + session.getAttribute("user_id").toString() + " is going to decline order number " + orderId);
                 request.getRequestDispatcher("WEB-INF/fillDeclinedReport.jsp").forward(request, response);

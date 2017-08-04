@@ -1,6 +1,6 @@
 package com.epam.renting.car.connection;
 
-import com.epam.renting.car.DAO.DAOUsers;
+import com.epam.renting.car.DAO.UsersDAO;
 import java.sql.Connection;
 import java.sql.SQLException;
 import javax.naming.Context;
@@ -11,7 +11,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 public class ConnectionSQL {
-    private static final Logger logger = LogManager.getLogger(DAOUsers.class);
+    private static final Logger logger = LogManager.getLogger(UsersDAO.class);
     private static DataSource dataSource;
 
     static {

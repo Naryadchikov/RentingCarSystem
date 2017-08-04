@@ -1,6 +1,6 @@
 package com.epam.renting.car.controller.customer;
 
-import com.epam.renting.car.DAO.DAOOrders;
+import com.epam.renting.car.DAO.OrdersDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -28,7 +28,7 @@ public class SendOrderServlet extends HttpServlet {
             String startDate = request.getParameter("startDate");
             String endingDate = request.getParameter("endingDate");
 
-            DAOOrders.addOrder(carId, userId, passport, startDate, endingDate);
+            OrdersDAO.addOrder(carId, userId, passport, startDate, endingDate);
 
             PrintWriter out = response.getWriter();
 

@@ -1,6 +1,6 @@
 package com.epam.renting.car.controller.admin;
 
-import com.epam.renting.car.DAO.DAOOrders;
+import com.epam.renting.car.DAO.OrdersDAO;
 import com.epam.renting.car.model.Order;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -30,7 +30,7 @@ public class ShowOrdersServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
 
         if (session != null && session.getAttribute("Role") != null && session.getAttribute("Role").equals("admin")) {
-            List<Order> orders = DAOOrders.getOrders();
+            List<Order> orders = OrdersDAO.getOrders();
 
             logger.info("Admin with user_id " + session.getAttribute("user_id").toString() + " opened orders list");
 
